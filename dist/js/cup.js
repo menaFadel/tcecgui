@@ -1,3 +1,5 @@
+'use strict';
+
 var roundDate = [];
 /* All times in GST, maintain proper formatting, if date is not decide just put 0 */
 var roundDateMan = [
@@ -39,45 +41,36 @@ var roundDateMan = [
 
 var startDateR1 = '17:00:00 on 2019.01.21';
 var startDateR2 = 0;
-var roundNo = 16;
+var roundNo = 4;
 
 var teamsx =
 [
-  [["LCZero ", 1], ["Pirarucu ", 32]],
-  [["ChessBrainVB ", 16], ["Jonny ", 17]],
-  [["ScorpioNN ", 8], ["Texel ", 25]],
-  [["Ethereal ", 9], ["Nemorino ", 24]],
-  [["Komodo ", 4], ["Wasp ", 29]],
-  [["Andscacs ", 13], ["Pedone ", 20]],
-  [["Stoofvlees ", 5], ["RubiChess ", 28]],
-  [["Xiphos ", 12], ["Fire ", 21]],
-  [["Stockfish ", 2], ["chess22k ", 31]],
-  [["Ginkgo ", 15], ["rofChade ", 18]],
-  [["KomodoMCTS ", 7], ["Vajolet2 ", 26]],
-  [["Laser ", 10], ["Fritz ", 23]],
-  [["AllieStein ", 3], ["Nirvana ", 30]],
-  [["Fizbo ", 14], ["Arasan ", 19]],
-  [["Houdini ", 6], ["Gull ", 27]],
-  [["Chiron ", 11], ["Booot ", 22]],
+  [["Stockfish ", 1], ["Winter ", 16]],
+  [["rofChade ", 8], ["Xiphos ", 9]],
+  [["Komodo ", 4], ["Vajolet2 ", 13]],
+  [["Stoofvlees ", 5], ["Arasan ", 12]],
+  [["LCZero ", 2], ["Nemorino ", 15]],
+  [["ScorpioNN ", 7], ["Defenchess ", 10]],
+  [["AllieStein ", 3], ["Pedone ", 14]],
+  [["Ethereal ", 6], ["RubiChess ", 11]],
 ];
 
-var bigData = {           
- teams : [            
- ],            
- results : [[ /* WINNER BRACKET */          
- [[1,0, "empty-bye"], [1,0], [1,0], [1,0], [1,0], [1,0], [1,0], [1,0], [1,0, "arun"], [0,1], [1,0], [1,0], [1,0], [0,1], [1,0], [1,0]],
- [[0,0, "arun"], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0]],        
- [[0,0], [0,0], [0,0], [0,0]],          
- [[0,0], [0,0]],           
- [[0,0],           
-  [0,0]]            
- ]            
- ]            
-}            
+var bigData = {
+ teams : [
+ ],
+ results : [[ /* WINNER BRACKET */
+ [[0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0], [0,0]],
+ [[0,0], [0,0], [0,0], [0,0]],
+ [[0,0], [0,0]],
+ [[0,0],
+  [0,0]]
+ ]
+ ]
+};
 
 var roundResults = [];
 
-var dummyCross = 
+var dummyCross =
 {
 	"Event" : "",
 	"Order" : [
@@ -128,15 +121,15 @@ var dummyCross =
 			"WinsAsWhite" : 0
 		}
 	}
-}
+};
 
 var gamesEachMatch = [];
 var columnsEvent = [
      {
        field: 'match',
        title: 'Round',
-       width: '4%'
-       ,sortable: true
+       width: '4%',
+       sortable: true,
      },
      {
        field: 'Winner',
@@ -156,9 +149,9 @@ var columnsEvent = [
      },
      {
        field: 'Score',
-       title: 'Score'
-      ,formatter: 'formatterEvent'
-      ,cellStyle: 'cellformatterEvent'
+       title: 'Score',
+       formatter: 'formatterEvent',
+       cellStyle: 'cellformatterEvent',
      }
    ];
 

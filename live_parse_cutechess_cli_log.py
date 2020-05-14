@@ -2,6 +2,7 @@
 import chess, sys, os, json, time, re
 
 SLEEP_TIME = 0.1
+UPDATE_INTERVAL = 5
 DEFAULT_DIGITS = 3
 LAST_BYTES_SIZE = 100000
 
@@ -59,6 +60,7 @@ if __name__=="__main__":
         b = None
         prev_fen = ""
         prev_move_lst = []
+        previous_update = time.time()
         while True:
             size = get_size(logfile)
             if size < current_size or start_kb != get_start(logfile): #New tournament started
@@ -129,6 +131,7 @@ if __name__=="__main__":
                                 if b.turn==chess.BLACK:
                                    color = 1
                                 nodes_int = 0
+                                depth_int = 0
                                 for i, token in enumerate(l):
                                     if b.turn==chess.BLACK:
                                         color = 1
@@ -141,6 +144,7 @@ if __name__=="__main__":
                                             score = "#%i" % (score_no,)
                                     elif token=="depth":
                                         depth = l[i+1]
+                                        depth_int = int(depth)
                                     elif token=="seldepth":
                                         seldepth = l[i+1]
                                     elif token=="nodes":
@@ -160,8 +164,13 @@ if __name__=="__main__":
                                 if not speed and nodes_int and time_s:
                                     speed = str_SI(int(round(nodes_int/time_s)), postfix="nps")
                                 if fail == 0 and pv_str:
-                                   json_str = json.dumps({"color": color, "engine": name, "eval": score, "pv": pv_str, "depth": depth, "speed": speed, "tbhits": tbhits, "time": time_s, "nodes": nodes, "plynum": plynum})
-                                   with open("liveengineeval.json", "w") as fp_out: fp_out.write(json_str + "\n")
+                                    if time.time() - previous_update >= UPDATE_INTERVAL and depth_int>=10:
+                                        load = os.getloadavg()[0]
+                                        with open("load.json", "w") as fp_out: fp_out.write(str(load))
+                                        if load < 10:
+                                            json_str = json.dumps({"color": color, "engine": name, "eval": score, "pv": pv_str, "depth": depth, "speed": speed, "tbhits": tbhits, "time": time_s, "nodes": nodes, "plynum": plynum})
+                                            with open("liveengineeval.json", "w") as fp_out: fp_out.write(json_str + "\n")
+                                        previous_update = time.time()
                             if current_size >= size:
                                 break
                     #current_size = size
